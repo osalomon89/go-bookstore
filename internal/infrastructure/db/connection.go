@@ -1,16 +1,17 @@
-package mysqldb
+package db
 
 import (
 	"fmt"
 
-	"github.com/osalomon89/go-bookstore/inventory/domain"
+	"github.com/osalomon89/go-bookstore/internal/core/domain"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 var db *gorm.DB //nolint:gochecknoglobals
 
-func getConnectionDB() (*gorm.DB, error) {
+func GetConnectionDB() (*gorm.DB, error) {
+	load()
 	var err error
 
 	if db == nil {

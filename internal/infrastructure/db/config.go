@@ -1,4 +1,4 @@
-package mysqldb
+package db
 
 import (
 	"fmt"
@@ -20,7 +20,7 @@ var (
 	dbMaxLifetime = "DB_CONN_MAX_LIFETIME"
 )
 
-func Load() {
+func load() {
 	environment = map[string]string{
 		dbHost:        os.Getenv(dbHost),
 		dbPort:        os.Getenv(dbPort),

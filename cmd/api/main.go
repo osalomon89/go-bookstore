@@ -2,16 +2,21 @@ package main
 
 import (
 	"fmt"
-	"sync"
+	"net/http"
 
-	inventorysrv "github.com/osalomon89/go-bookstore/inventory"
+	"github.com/gorilla/mux"
+	"github.com/osalomon89/go-bookstore/internal/infrastructure/server"
 )
 
 func main() {
-	fmt.Println("Hello World")
-	wg := sync.WaitGroup{}
+	httpRouter := mux.NewRouter()
+	httpRouter.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "pong")
+	}).Methods("GET")
 
-	wg.Add(1)
-	go inventorysrv.InventoryService(&wg)
-	wg.Wait()
+	server.RegisterRouter(httpRouter)
+
+	if err := http.ListenAndServe(":8080", httpRouter); err != nil {
+		panic(err.Error())
+	}
 }
